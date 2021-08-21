@@ -1,0 +1,12 @@
+{
+  "name": "marriage-app",
+  "displayName": "marriage-app",
+  "expo": {
+    "name": "marriage-app",
+    "slug": "marriage-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
