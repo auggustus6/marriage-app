@@ -1,19 +1,24 @@
+import 'react-native-reanimated';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ThemeProvider } from 'styled-components';
+import theme from './src/global/styles/theme';
+import { NativeBaseProvider } from 'native-base';
+import { MarriageProvider } from './src/hooks/useMarriage';
+import Routes from './src/routes';
+import { AuthProvider } from './src/hooks/useAuth';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <NativeBaseProvider>
+      <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <MarriageProvider>
+            <Routes />
+          </MarriageProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </NativeBaseProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
