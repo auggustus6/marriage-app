@@ -1,16 +1,17 @@
 import React, { useContext, useState } from "react";
 import { createContext } from "react";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useEffect } from "react";
 import * as AuthSession from 'expo-auth-session';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import { MarriageProps } from "./useMarriage";
 import { database } from "../databases";
 import { User as UserModel } from "../databases/model/User";
-import api from "../api";
+// import api from "../api";
+import { AxiosContext } from "./useAxios";
 
 export type User = {
   id: number;
+  user_id?: number;
   name: string;
   email: string;
   phoneNumber: string;
@@ -38,6 +39,7 @@ type AuthContextProps = {
   user: User;
   loading: boolean;
   handleLogin: (username: string, password: string) => Promise<void>;
+  handleCreateAccount: (data: any) => Promise<void>;
   handleResetPassword: (username: string) => Promise<void>;
   handleUpdatePassword: (username: string, password: string) => Promise<void>;
   handleLogout: () => Promise<void>;
@@ -56,6 +58,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User>({} as User);
   const [loading, setLoading] = useState(false);
 
+  const { api } = useContext(AxiosContext);
+
 
   useEffect(() => {
     async function loadStoragedData() {
@@ -65,10 +69,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         const userData = response[0] as unknown as User;
         setUser(userData);
         setLoading(false);
-        console.log(userData.marriages)
-
       } catch (err) {
-        console.log('error')
         setLoading(false);
       }
     }
@@ -98,6 +99,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }
 
+  const handleCreateAccount = async (data: any) => {
+    setLoading(true);
+    try {
+      const response: any = await api.post(`/user`, data);
+
+      if (response.data) {
+        await handleLogin(data.email, data.password);
+      }
+      setLoading(false);
+
+    } catch (err) {
+      setLoading(false);
+      throw new Error(JSON.stringify(err));
+    }
+  };
+
 
   const handleLogin = async (username: string, password: string) => {
     setLoading(true);
@@ -120,17 +137,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             user.isAdmin = authResponse.user!.isAdmin;
           });
         });
-        
-
         setUser(authResponse.user);
-
         setAuth({
           access_token: authResponse.access_token,
           signed: true
         });
       }
       setLoading(false);
-    
+
     } catch (err) {
       setLoading(false);
       throw new Error(JSON.stringify(err));
@@ -171,17 +185,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       await useAsyncStorage('@Marriage_Token').removeItem();
       database.write(async () => {
-       await database.get('user').query().destroyAllPermanently();
-       await database.get('marriage').query().destroyAllPermanently();
-     });
- 
-     setAuth({
-       access_token: "",
-       signed: false
-     });
- 
-     setUser({} as User);
-    }catch(err){
+        await database.get('user').query().destroyAllPermanently();
+        await database.get('marriage').query().destroyAllPermanently();
+      });
+
+      setAuth({
+        access_token: "",
+        signed: false
+      });
+
+      setUser({} as User);
+    } catch (err) {
       throw new Error(JSON.stringify(err));
     }
   };
@@ -191,6 +205,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     user,
     loading,
     handleLogin,
+    handleCreateAccount,
     handleResetPassword,
     handleUpdatePassword,
     handleSignWithGoogle,

@@ -18,58 +18,74 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 import PostComments from "../PostComments";
 import AddComment from "../AddComment";
+import { MuralProps, useMural } from "../../hooks/useMural";
+import { useMarriage } from "../../hooks/useMarriage";
+import { useAuth } from "../../hooks/useAuth";
+import { formatedNames } from "../../utils/formatedName";
 
-const Post = () => {
+type PostProps = MuralProps;
+
+const urlDefault = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlhCKYB9NLvGfTTbqjqi_a2M7ZUM79yc48VQ&usqp=CAU"
+
+const Post = ({ picture, description, comments, created_at, id, likes }: PostProps) => {
+  const { marriage } = useMarriage();
+  const { handleToggleLike, loading } = useMural();
+  const { user } = useAuth();
   const theme = useTheme();
-
-  const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState<string[]>([]);
-
-  const handleAddComment = () => {
-    setComments([...comments, 'Sequestram minha sogra']);
-    !showComments && setShowComments(true);
-  }
 
   return (
     <Container>
       <Header>
         <Avatar width={50} height={50} borderColor={theme.colors.primary} />
         <HeaderContent>
-          <UserName>Carlos Augusto S. Salles</UserName>
+          <UserName>{formatedNames(marriage.fiancee, marriage.engaged)}</UserName>
           <Date>05/08/2021 13:21</Date>
         </HeaderContent>
       </Header>
 
-      <ContainerThumb>
+      <ContainerThumb
+        source={{ uri: picture ? picture : urlDefault }}
+        blurRadius={5}>
         <ThumImage
-        source={{ uri: 'https://i.pinimg.com/474x/7a/2f/85/7a2f8588ff303937286555cd8a19f74a.jpg' }} resizeMode="contain" />
+          source={{ uri: picture ? picture : urlDefault }} resizeMode="contain" />
       </ContainerThumb>
 
       <Actions>
-        <RectButton>
-          <FontAwesome name="heart" size={RFValue(24)} color={theme.colors.attention} />
+        <RectButton
+          enabled={!loading}
+          onPress={() => handleToggleLike(id)}>
+          {(likes.includes(String(user.user_id!)) || likes.includes(String(user.id!))) ? <FontAwesome name="heart" size={RFValue(36)} color={theme.colors.attention} /> : <FontAwesome name="heart-o" size={RFValue(36)} color={theme.colors.attention} />}
         </RectButton>
-
       </Actions>
 
       <Description>
-        Este é automóvel desportivo. Surgiu do lendário touro de lide indultado na praça Real Maestranza de Sevilla.
+        {description}
       </Description>
 
       <ContainerAddComment>
-        <AddComment onPress={handleAddComment}/>
+        <AddComment idMural={id} />
       </ContainerAddComment>
 
 
-      <RectButton onPress={() => setShowComments(!showComments)}>
-        <Description>
-          Ver comentários
-        </Description>
-      </RectButton>
+      {comments.length > 5 ?
+        <>
+          {/* <RectButton onPress={() => setShowComments(!showComments)}>
+            <Description>
+              Ver comentários
+            </Description>
+          </RectButton> */}
 
-      {showComments && comments.map(comment => (
-        <PostComments key={comment} comment={comment} />
-      ))}
+          {comments.map((comment: any) => (
+            <PostComments key={comment.id} {...comment} />
+          ))}
+        </>
+        :
+        comments.map((comment) => (
+          <PostComments key={comment.id} {...comment} />
+        ))
+
+      }
+
     </Container>
   )
 }

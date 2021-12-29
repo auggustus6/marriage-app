@@ -38,7 +38,7 @@ export const Date = styled.Text`
   `}
 `;
 
-export const ContainerThumb = styled.View`
+export const ContainerThumb = styled.ImageBackground`
   ${({ theme }) => css`
     background:#eee;
   `}

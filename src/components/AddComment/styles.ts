@@ -9,11 +9,12 @@ export const Container = styled.View`
     `}
 `;
 
-export const Input = styled.TextInput`
+export const Input = styled.TextInput.attrs({
+  borderBottomColor: "#ccc",
+  borderBottomWidth:1,
+})`
   ${({ theme }) => css`
       width:100%;
       padding:10px;
-      border-bottom-width: 1;
-      border-bottom-color: ${theme.colors.text};
     `}
 `;

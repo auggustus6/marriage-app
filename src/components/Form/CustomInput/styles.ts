@@ -26,7 +26,6 @@ export const Input = styled.TextInput`
   ${({ theme }) => css`
       background:${theme.colors.white};
       padding:10px;
-      margin-bottom:20px;
       border-radius:5px;
       background-color: #eee;
     `}

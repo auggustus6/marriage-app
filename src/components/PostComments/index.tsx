@@ -1,34 +1,51 @@
 import React from "react";
 import { useTheme } from "styled-components";
+import { CommentsProps, MuralProps, useMural } from "../../hooks/useMural";
+import { MaterialIcons } from '@expo/vector-icons';
 import Avatar from '../Avatar';
-import { 
+import {
   Container,
   Header,
+  ContainerHeader,
   HeaderContent,
+  ContainerIcons,
   UserName,
   Date,
   Comment
- } from './styles';
+} from './styles';
+import { RFValue } from "react-native-responsive-fontsize";
 
- type PostCommentsProps = {
-   comment: string;
- }
- 
-const PostComments = ({comment}:PostCommentsProps) => {
+type PostCommentsProps = CommentsProps;
+
+const PostComments = ({ created_at, description, id, mural_id }: PostCommentsProps) => {
+  const { handleRemoveComment } = useMural();
   const theme = useTheme();
+
+  const onPressRemove = async (idComment: number) => {
+    try {
+      await handleRemoveComment(idComment, mural_id);
+    } catch (err) {
+      console.error(err);
+    }
+  }
   return (
-  <Container>
-    <Header>
+    <Container>
+      <Header>
         <Avatar width={25} height={25} borderColor={theme.colors.primary} />
-        <HeaderContent>
-          <UserName>Anonymous</UserName>
-          <Date>05/08/2021 13:21</Date>
-        </HeaderContent>
+        <ContainerHeader>
+          <HeaderContent>
+            <UserName>Anonymous</UserName>
+            <Date>{created_at}</Date>
+          </HeaderContent>
+          <ContainerIcons onPress={() => onPressRemove(id)}>
+            <MaterialIcons name="delete" size={RFValue(24)} />
+          </ContainerIcons>
+        </ContainerHeader>
       </Header>
 
-      <Comment>{comment}</Comment>
- </Container>
- )
+      <Comment>{description}</Comment>
+    </Container>
+  )
 }
 
 export default PostComments

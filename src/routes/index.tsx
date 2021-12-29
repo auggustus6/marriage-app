@@ -13,6 +13,7 @@ const Routes = () => {
 
     if (loadingAuth || loading) return <LoadingMarriage />;
 
+
     return (
         <NavigationContainer>
             {user?.id ? <GlobalRoutes /> : <AuthRoutes />}

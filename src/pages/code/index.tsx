@@ -11,7 +11,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { GlobalRoutesParams } from "../../routes/globalRoutes";
 
 const Code = ({ navigation }: NativeStackScreenProps<GlobalRoutesParams>) => {
-  const [code, setCode] = useState('laura-maria-bellini-carlos-augusto-sartore-salles-1636566952268');
+  const [code, setCode] = useState('laura-bellini-carlos-augusto-1640789284232');
 
   const theme = useTheme();
   const {

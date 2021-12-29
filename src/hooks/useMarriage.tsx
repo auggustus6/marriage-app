@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { AxiosError, AxiosResponse } from "axios";
 import { createContext, useContext, useState } from "react";
-import api from "../api";
 import { database } from "../databases";
 import { Marriage } from "../databases/model/Marriage";
 import { ErrorResponse } from '../api/types';
+import { AxiosContext } from './useAxios';
 
 type MarriageContextProps = {
     marriage: MarriageProps;
@@ -20,6 +20,7 @@ type MarriageProviderProps = {
 
 export type MarriageProps = {
     id: number;
+    marriage_id?: number;
     date: string;
     code: string;
     fiancee: string;
@@ -44,6 +45,8 @@ export const MarriageProvider = ({ children }: MarriageProviderProps) => {
     const [loading, setLoading] = useState(false);
     const [marriage, setMarriage] = useState<MarriageProps>({} as MarriageProps);
 
+    const { api } = useContext(AxiosContext);
+
     const resetContext = () => {
         setMarriage({} as MarriageProps);
     }
@@ -53,7 +56,7 @@ export const MarriageProvider = ({ children }: MarriageProviderProps) => {
             setLoading(true);
             const marriageCollection = database.get<Marriage>('marriage');
             const response = await marriageCollection.query().fetch();
-      
+
             if (response.length > 0) {
                 const marriageData = response[0] as unknown as MarriageProps;
                 setMarriage(marriageData);
@@ -81,7 +84,10 @@ export const MarriageProvider = ({ children }: MarriageProviderProps) => {
                         marriage.couple_photo = marriageResponse.couple_photo ?? null;
                     });
                 });
-                setMarriage(marriageResponse);
+                setMarriage({
+                    ...marriageResponse,
+                    marriage_id: marriageResponse.id
+                });
             }
             setLoading(false);
 

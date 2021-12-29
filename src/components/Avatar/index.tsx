@@ -6,18 +6,22 @@ import {
 export type AvatarProps = {
   width: number;
   height: number;
+  couplePhoto?: string;
   borderColor?: string;
 }
 
 const Avatar = ({
   width,
   height,
-  borderColor
+  borderColor,
+  couplePhoto
 }: AvatarProps) => {
   return (
-    <Container 
+    <Container
       width={width}
       height={height}
+      resizeMode="cover"
+      source={{ uri: couplePhoto }}
       borderColor={borderColor}
     />
   )

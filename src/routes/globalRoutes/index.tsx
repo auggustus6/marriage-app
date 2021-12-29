@@ -6,10 +6,12 @@ import MainRoutes from '../mainRoutes';
 import { useMarriage } from '../../hooks/useMarriage';
 import LoadingMarriage from '../../components/LoadingMarriage';
 import { useAuth } from '../../hooks/useAuth';
+import CapturePhoto from '../../pages/photos/CapturePhoto';
 
 export type GlobalRoutesParams = {
     Account: undefined;
     Code: undefined;
+    CapturePhoto: undefined;
     Loading: undefined;
     Main: undefined;
 };
@@ -23,11 +25,18 @@ const GlobalRoutes = () => {
     return (
         <Stack.Navigator>
             {marriage?.id &&
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Main"
-                    component={MainRoutes}
-                />
+                <>
+                    <Stack.Screen
+                        options={{ headerShown: false }}
+                        name="Main"
+                        component={MainRoutes}
+                    />
+
+                    <Stack.Screen
+                        options={{ headerShown: false }}
+                        name="CapturePhoto"
+                        component={CapturePhoto} />
+                </>
             }
 
             {(!marriage?.id) && (

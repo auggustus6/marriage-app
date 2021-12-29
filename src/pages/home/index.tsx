@@ -25,13 +25,16 @@ const Home = () => {
     ) : [];
   }, [marriage.date])
 
+  console.log(marriage.couple_photo)
+
   return (
     <Container>
       <Header>
         <AvatarContainer>
           <Avatar
-            width={170}
-            height={170}
+            width={200}
+            height={200}
+            couplePhoto={marriage?.couple_photo!}
             borderColor={theme.colors.secondary}
           />
         </AvatarContainer>

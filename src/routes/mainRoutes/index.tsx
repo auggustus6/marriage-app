@@ -15,6 +15,7 @@ export type MainRoutesParamList = {
     Mural: undefined;
     Padrinhos: undefined;
     AccountStack: undefined;
+    PhotosStack: undefined;
 };
 
 const Tab = createBottomTabNavigator<MainRoutesParamList>();
@@ -62,7 +63,7 @@ const MainRoutes = () => {
 
             <Tab.Screen
                 options={{
-                    tabBarLabel:"Conta",
+                    tabBarLabel: "Conta",
                     tabBarIcon: () => <Feather size={28} name="users" />
                 }}
                 name="AccountStack" component={AccountStack} />

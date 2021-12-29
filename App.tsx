@@ -1,21 +1,27 @@
 import 'react-native-reanimated';
 import React from 'react';
+import Routes from './src/routes';
 import { ThemeProvider } from 'styled-components';
-import theme from './src/global/styles/theme';
 import { NativeBaseProvider } from 'native-base';
 import { MarriageProvider } from './src/hooks/useMarriage';
-import Routes from './src/routes';
 import { AuthProvider } from './src/hooks/useAuth';
+import { MuralProvider } from './src/hooks/useMural';
+import theme from './src/global/styles/theme';
+import { AxiosProvider } from './src/hooks/useAxios';
 
 export default function App() {
   return (
     <NativeBaseProvider>
       <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <MarriageProvider>
-            <Routes />
-          </MarriageProvider>
-        </AuthProvider>
+        <AxiosProvider>
+          <AuthProvider>
+            <MarriageProvider>
+              <MuralProvider>
+                <Routes />
+              </MuralProvider>
+            </MarriageProvider>
+          </AuthProvider>
+        </AxiosProvider>
       </ThemeProvider>
     </NativeBaseProvider>
   );

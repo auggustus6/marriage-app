@@ -23,7 +23,7 @@ import PhoneInput from 'react-native-phone-number-input';
 
 const SignUp = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => {
     const theme = useTheme();
-    const { handleSignWithGoogle } = useAuth();
+    const { handleCreateAccount } = useAuth();
 
     const phoneInput = useRef<PhoneInput>(null);
 
@@ -63,8 +63,15 @@ const SignUp = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => 
                         phoneNumber: "",
                     }}
                     validationSchema={validateSchema}
-                    onSubmit={(values) => {
+                    onSubmit={async (values) => {
                         // Call Api Login
+                        const {confirmPassword, ...data} = values;
+
+                        await handleCreateAccount({
+                            ...data,
+                            role:"NORMAL",
+                            isActive: true
+                        });
                     }}
                 >
                     {({ values, errors, handleSubmit, handleChange }) => (
@@ -127,7 +134,7 @@ const SignUp = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => 
                                         testID="submit-button"
                                         onPress={() => handleSubmit()}
                                         background={theme.colors.blackButton} colorText={theme.colors.primary}>
-                                        Entrar
+                                        Criar Conta
                                     </Button>
                                 </ButtonContainer>
 
