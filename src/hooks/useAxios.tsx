@@ -1,7 +1,6 @@
 import React from "react";
 import { createContext } from "react";
 import axios, {AxiosInstance} from "axios";
-import { useAuth } from "./useAuth";
 import { useToken } from "./useToken";
 
 type AxiosProps = {
