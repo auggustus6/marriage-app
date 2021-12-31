@@ -3,9 +3,7 @@ import styled, { css } from "styled-components/native";
 
 
 export const Presentation = styled.View`
-      ${({ theme }) => css`
-
-    `}
+      ${({ theme }) => css``}
 `;
 
 export const Welcome = styled.Text`
@@ -20,7 +18,7 @@ export const Welcome = styled.Text`
 
 export const Title = styled.Text`
       ${({ theme }) => css`
-      font-size:${RFValue(22)}px;
+      font-size:${RFValue(18)}px;
       color:${theme.colors.white};
       justify-content: center;
       align-items: center;

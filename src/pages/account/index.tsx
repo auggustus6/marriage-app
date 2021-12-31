@@ -12,7 +12,8 @@ import {
   ListCards,
   ButtonSelectedMarriaged,
   Container,
-  Form
+  Form,
+  ContainerButton
 } from './styles';
 
 import { useTheme } from "styled-components";
@@ -29,7 +30,7 @@ const Account = () => {
     return user ? user : null;
   }, [user]);
 
-  const formatedNames = (fiance:string, engaged:string) => {
+  const formatedNames = (fiance: string, engaged: string) => {
     const woman = fiance.split(" ")[0];
     const men = engaged.split(" ")[0];
 
@@ -40,16 +41,15 @@ const Account = () => {
     try {
       await handleLogout();
       resetContext();
-    }catch(err){
-      console.log('Ops, algo aconteceu. Tente novamente mais tarde');
+    } catch (err) {
     }
   }
 
 
   return (
     <PageContainer
-      title="Conta"
-      subTtitle={'Carlos Augusto'}
+      title="Minha Conta"
+      subTtitle={user.name}
     >
       <ListCards
         data={[1 as any, ...user.marriages]}
@@ -58,8 +58,10 @@ const Account = () => {
           <ContentCard>
             {index === 0 && <CardMarriedBlank />}
             {index !== 0 &&
-              <ButtonSelectedMarriaged onPress={() => handleSignInWithCode(item.code)}>
+              <ButtonSelectedMarriaged
+                onPress={() => handleSignInWithCode(item.code)}>
                 <CardMarried
+                  couplePhoto={item.couple_photo}
                   titleMarriage={formatedNames(item.fiancee, item.engaged)}
                   dateMarriage={format(new Date(item.date), "dd/MM/yyyy")}
                   selected={marriage.code === item.code} />
@@ -83,17 +85,21 @@ const Account = () => {
             <CustomInput label="Nome" placeholder={dataUser?.name} />
             <CustomInput label="E-mail" placeholder={dataUser?.email} />
 
-            <Button
-              background={theme.colors.primary}
-              colorText={theme.colors.white}>
-              Salvar
-            </Button>
+            <ContainerButton>
 
-            <Button
-              onPress={handleClearData}
-              colorText={theme.colors.blackButton}>
-              Deslogar
-            </Button>
+
+              <Button
+                background={theme.colors.primary}
+                colorText={theme.colors.white}>
+                Salvar
+              </Button>
+
+              <Button
+                onPress={handleClearData}
+                colorText={theme.colors.blackButton}>
+                Deslogar
+              </Button>
+            </ContainerButton>
           </Form>
         </KeyboardAvoidingView>
       </Container>

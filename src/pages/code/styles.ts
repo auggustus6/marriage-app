@@ -17,3 +17,9 @@ export const ContainerForm = styled.View`
         margin:60px 0px;
     `}
 `;
+
+export const ContainerButton = styled.View`
+  ${({ theme }) => css`
+        margin:20px 0px;
+    `}
+`;

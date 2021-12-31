@@ -14,11 +14,13 @@ import {
   Comment
 } from './styles';
 import { RFValue } from "react-native-responsive-fontsize";
+import { useAuth } from "../../hooks/useAuth";
 
 type PostCommentsProps = CommentsProps;
 
-const PostComments = ({ created_at, description, id, mural_id }: PostCommentsProps) => {
+const PostComments = ({ created_at, description, id, mural_id, user_id }: PostCommentsProps) => {
   const { handleRemoveComment } = useMural();
+  const { user } = useAuth();
   const theme = useTheme();
 
   const onPressRemove = async (idComment: number) => {
@@ -34,12 +36,14 @@ const PostComments = ({ created_at, description, id, mural_id }: PostCommentsPro
         <Avatar width={25} height={25} borderColor={theme.colors.primary} />
         <ContainerHeader>
           <HeaderContent>
-            <UserName>Anonymous</UserName>
+            <UserName>{user.name}</UserName>
             <Date>{created_at}</Date>
           </HeaderContent>
-          <ContainerIcons onPress={() => onPressRemove(id)}>
-            <MaterialIcons name="delete" size={RFValue(24)} />
-          </ContainerIcons>
+          {(user.user_id || user.id) == user_id && (
+            <ContainerIcons onPress={() => onPressRemove(id)}>
+              <MaterialIcons name="delete" size={RFValue(24)} />
+            </ContainerIcons>
+          )}
         </ContainerHeader>
       </Header>
 

@@ -54,7 +54,7 @@ export const Actions = styled.View`
   ${({ theme }) => css`
     flex-direction: row;
     align-items: center;
-    padding:5px 20px;
+    padding:10px 20px;
   `}
 `;
 export const Description = styled.Text`
@@ -62,7 +62,7 @@ export const Description = styled.Text`
     font-size:${RFValue(15)}px;
     color:${theme.colors.text_dark};
     line-height: ${RFValue(28)}px;
-    padding:5px 20px;
+    padding:0px 20px;
 
   `}
 `;

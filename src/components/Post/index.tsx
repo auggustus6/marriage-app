@@ -36,7 +36,7 @@ const Post = ({ picture, description, comments, created_at, id, likes }: PostPro
   return (
     <Container>
       <Header>
-        <Avatar width={50} height={50} borderColor={theme.colors.primary} />
+        <Avatar width={50} height={50} borderColor={theme.colors.primary} couplePhoto={marriage.couple_photo}/>
         <HeaderContent>
           <UserName>{formatedNames(marriage.fiancee, marriage.engaged)}</UserName>
           <Date>05/08/2021 13:21</Date>
@@ -54,7 +54,7 @@ const Post = ({ picture, description, comments, created_at, id, likes }: PostPro
         <RectButton
           enabled={!loading}
           onPress={() => handleToggleLike(id)}>
-          {(likes.includes(String(user.user_id!)) || likes.includes(String(user.id!))) ? <FontAwesome name="heart" size={RFValue(36)} color={theme.colors.attention} /> : <FontAwesome name="heart-o" size={RFValue(36)} color={theme.colors.attention} />}
+          {(likes.includes(String(user.user_id!)) || likes.includes(String(user.id!))) ? <FontAwesome name="heart" size={RFValue(28)} color={theme.colors.attention} /> : <FontAwesome name="heart-o" size={RFValue(28)} color={theme.colors.attention} />}
         </RectButton>
       </Actions>
 
@@ -69,12 +69,6 @@ const Post = ({ picture, description, comments, created_at, id, likes }: PostPro
 
       {comments.length > 5 ?
         <>
-          {/* <RectButton onPress={() => setShowComments(!showComments)}>
-            <Description>
-              Ver comentários
-            </Description>
-          </RectButton> */}
-
           {comments.map((comment: any) => (
             <PostComments key={comment.id} {...comment} />
           ))}

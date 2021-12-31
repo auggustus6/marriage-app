@@ -27,7 +27,6 @@ const CapturePhoto = ({ route, navigation }: NativeStackScreenProps<GlobalRoutes
       setDescription("");
       navigation.goBack();
     } catch (err) {
-      console.log('Error');
     }
   }
 

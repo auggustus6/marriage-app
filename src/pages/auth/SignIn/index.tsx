@@ -57,7 +57,6 @@ const SignIn = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => 
             try {
               await handleLogin(values.email, values.password);
             }catch(err){
-              console.log(err);
             }
           }}
         >

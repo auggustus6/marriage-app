@@ -3,7 +3,8 @@ import CustomInput from "../../components/Form/CustomInput";
 import Button from "../../components/Button";
 import {
   Container,
-  ContainerForm
+  ContainerForm,
+  ContainerButton
 } from './styles';
 import { useTheme } from "styled-components";
 import { useMarriage } from "../../hooks/useMarriage";
@@ -11,7 +12,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { GlobalRoutesParams } from "../../routes/globalRoutes";
 
 const Code = ({ navigation }: NativeStackScreenProps<GlobalRoutesParams>) => {
-  const [code, setCode] = useState('laura-bellini-carlos-augusto-1640789284232');
+  const [code, setCode] = useState('laura-bellini-carlos-augusto-1640806656030');
 
   const theme = useTheme();
   const {
@@ -24,7 +25,6 @@ const Code = ({ navigation }: NativeStackScreenProps<GlobalRoutesParams>) => {
       await handleSignInWithCode(code);
       navigation.navigate("Main");
     } catch (err) {
-      console.log(err);
     }
   }
 
@@ -38,10 +38,13 @@ const Code = ({ navigation }: NativeStackScreenProps<GlobalRoutesParams>) => {
           value={code}
           onChangeText={setCode}
         />
-        <Button
-          onPress={handleCode}
-          background="#393939"
-          colorText={theme.colors.primary}>ACESSAR</Button>
+
+        <ContainerButton>
+          <Button
+            onPress={handleCode}
+            background="#393939"
+            colorText={theme.colors.primary}>ACESSAR CASAMENTO</Button>
+        </ContainerButton>
       </ContainerForm>
 
     </Container>

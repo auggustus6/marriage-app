@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, { useMemo } from "react";
 import WelcomePresentation from "../../components/WelcomePresentation";
 import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
@@ -11,21 +11,19 @@ import {
   Days
 } from './styles';
 import { useTheme } from "styled-components";
-import {differenceInDays} from 'date-fns';
+import { differenceInDays } from 'date-fns';
 import { useMarriage } from "../../hooks/useMarriage";
 
 const Home = () => {
-  const {marriage} = useMarriage();
+  const { marriage } = useMarriage();
   const theme = useTheme();
 
   const memoDaysOfMarriage = useMemo(() => {
     return marriage?.date ? differenceInDays(
-        new Date(marriage.date),
-        new Date(),
+      new Date(marriage.date),
+      new Date(),
     ) : [];
   }, [marriage.date])
-
-  console.log(marriage.couple_photo)
 
   return (
     <Container>

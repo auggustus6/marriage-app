@@ -94,8 +94,6 @@ const SignUp = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => 
                                 placeholder="Insira seu e-mail cadastrado."
                             />
 
-
-
                             <CustomInput
                                 labelColor={theme.colors.white}
                                 testID="input-password"

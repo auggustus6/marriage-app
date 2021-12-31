@@ -48,6 +48,9 @@ const GlobalRoutes = () => {
 
                     <Stack.Screen
                         name="Code"
+                        options={{
+                          header: () => null,
+                        }}
                         component={Code} />
                 </>
             )}

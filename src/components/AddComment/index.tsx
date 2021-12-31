@@ -24,7 +24,6 @@ const AddComment = ({idMural, ...rest}: AddCommentProps) => {
       await handleAddComment(comment, idMural);
       setValue(""); 
     }catch(err){
-      console.log(err);
     }
   }
 

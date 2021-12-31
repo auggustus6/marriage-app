@@ -32,6 +32,11 @@ export const Container = styled.View`
 export const Form = styled.View`
     ${({ theme }) => css`
         margin-top:16px;
+    `}
+`;
 
+export const ContainerButton = styled.View`
+    ${({ theme }) => css`
+        margin: 20px 0px;
     `}
 `;
