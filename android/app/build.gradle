@@ -78,7 +78,8 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: false
+    enableHermes: false,
+    bundleInDebug: true
 ]
 
 apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
@@ -172,7 +173,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
