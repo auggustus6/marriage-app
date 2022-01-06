@@ -6,8 +6,8 @@ import { NativeBaseProvider } from 'native-base';
 import { MarriageProvider } from './src/hooks/useMarriage';
 import { AuthProvider } from './src/hooks/useAuth';
 import { MuralProvider } from './src/hooks/useMural';
-import theme from './src/global/styles/theme';
 import { AxiosProvider } from './src/hooks/useAxios';
+import theme from './src/global/styles/theme';
 
 export default function App() {
   return (

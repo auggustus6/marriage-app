@@ -9,8 +9,6 @@ const { width, height } = Dimensions.get("window");
 export const Container = styled.View`
   ${({ theme }) => css`
         flex:1;
-        background:red;
-
     `}
 `;
 
@@ -20,7 +18,6 @@ export const ImageBackground = styled.ImageBackground`
         width:${width}px;
         height: ${height}px;
         justify-content:flex-end;
-
     `}
 `;
 

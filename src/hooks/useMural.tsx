@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { createContext, useContext, useState } from "react";
+import { User } from '../databases/model/User';
 import { useAuth } from './useAuth';
 // import api from "../api";
 import { AxiosContext } from './useAxios';
@@ -29,6 +30,7 @@ export type CommentsProps = {
     id: number;
     created_at: string;
     update_at: string;
+    user: User;
 }
 
 export type MuralProps = {
@@ -128,7 +130,12 @@ export const MuralProvider = ({ children }: MuralProviderProps) => {
 
             const dataMurals = murals.map(mural => {
                 if (mural.id === response.data.payload.mural_id) {
-                    mural.comments.unshift(response.data.payload);
+                    mural.comments.unshift({
+                        ...response.data.payload,
+                        user: {
+                            name: user.name
+                        }
+                    });
                 }
                 return mural;
             });

@@ -82,12 +82,10 @@ const Account = () => {
           <TitlePage title="Conta" subTitle="Meus Dados" />
 
           <Form>
-            <CustomInput label="Nome" placeholder={dataUser?.name} />
-            <CustomInput label="E-mail" placeholder={dataUser?.email} />
+            <CustomInput label="Nome" editable={false} value={dataUser?.name} />
+            <CustomInput label="E-mail" editable={false} value={dataUser?.email} />
 
             <ContainerButton>
-
-
               <Button
                 background={theme.colors.primary}
                 colorText={theme.colors.white}>

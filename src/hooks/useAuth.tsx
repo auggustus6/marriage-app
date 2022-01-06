@@ -1,17 +1,15 @@
 import React, { useContext, useState } from "react";
-import { createContext } from "react";
-import axios, { AxiosResponse } from "axios";
-import { useEffect } from "react";
+import { useEffect, createContext } from "react";
+import  { AxiosResponse } from "axios";
+import { AxiosContext } from "./useAxios";
 import * as AuthSession from 'expo-auth-session';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { database } from "../databases";
 import { User as UserModel } from "../databases/model/User";
-// import api from "../api";
-import { AxiosContext } from "./useAxios";
 
 export type User = {
-  id: number;
-  user_id?: number;
+  id: string;
+  user_id: number;
   name: string;
   email: string;
   phoneNumber: string;
@@ -33,11 +31,16 @@ type ResponseAuthLogin = {
   user: User;
 }
 
+type ResponseUserData = {
+  payload: User;
+  statusCode: number;
+}
 
 type AuthContextProps = {
   auth: Auth | null;
   user: User;
   loading: boolean;
+  loadUserByIdAndLocalId: (userId: number, idUserLocal: string) => Promise<void>;
   handleLogin: (username: string, password: string) => Promise<void>;
   handleCreateAccount: (data: any) => Promise<void>;
   handleResetPassword: (username: string) => Promise<void>;
@@ -58,7 +61,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User>({} as User);
   const [loading, setLoading] = useState(false);
 
-  const { api } = useContext(AxiosContext);
+  const { api, error } = useContext(AxiosContext);
+
+  useEffect(() => {
+    if(error){
+      async function validateUserLogged(){
+        await
+        useAsyncStorage('@Marriage_Token')
+          .removeItem();
+        setAuth({} as Auth);
+        setUser({} as User);
+      }
+
+      validateUserLogged();
+    }
+  }, [error])
 
 
   useEffect(() => {
@@ -73,9 +90,42 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setLoading(false);
       }
     }
-
     loadStoragedData();
   }, []);
+
+
+  const loadUserByIdAndLocalId = async (userId: number, idUserLocal:string) => {
+    setLoading(true);
+    try {
+      const response: AxiosResponse<ResponseUserData> = await api.get(`/user/${userId}`);
+
+      if (response.data) {
+        const userResponse = response.data.payload;
+
+        database.write(async () => {
+          const userModel = await database.get<UserModel>('user').find(idUserLocal);
+          await userModel.update((user) => {
+            user.user_id = Number(userResponse.id);
+            user.name = userResponse.name;
+            user.email = userResponse.email;
+            user.phoneNumber = userResponse.phoneNumber;
+            user.marriages = userResponse.marriages;
+            user.isAdmin = userResponse.isAdmin;
+          });
+          setUser({
+            ...userResponse,
+            user_id: Number(userResponse.id),
+            id: userModel.id,
+          });
+        });
+      }
+      setLoading(false);
+
+    } catch (err) {
+      setLoading(false);
+      throw new Error(JSON.stringify(err));
+    }
+  };
 
   const handleSignWithGoogle = async () => {
     try {
@@ -128,28 +178,34 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             .setItem(authResponse.access_token);
 
         database.write(async () => {
-          await database.get<UserModel>('user').create(user => {
-            user.user_id = authResponse.user!.id;
+          const userModel = await database.get<UserModel>('user').create(user => {
+            user.user_id = Number(authResponse.user!.id);
             user.name = authResponse.user!.name;
             user.email = authResponse.user!.email;
             user.phoneNumber = authResponse.user!.phoneNumber;
             user.marriages = authResponse.user!.marriages;
             user.isAdmin = authResponse.user!.isAdmin;
           });
-        });
-        setUser(authResponse.user);
-        setAuth({
-          access_token: authResponse.access_token,
-          signed: true
+          setUser({
+            ...authResponse.user,
+            user_id: Number(authResponse.user!.id),
+            id: userModel.id,
+          });
+          setAuth({
+            access_token: authResponse.access_token,
+            signed: true
+          });
+          setLoading(false);
         });
       }
-      setLoading(false);
+
 
     } catch (err) {
       setLoading(false);
       throw new Error(JSON.stringify(err));
     }
   };
+
 
   const handleResetPassword = async (username: string) => {
     setLoading(true);
@@ -158,7 +214,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setLoading(false);
     } catch (err) {
       setLoading(false);
-
     }
   };
 
@@ -170,15 +225,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setLoading(false);
     } catch (err) {
       setLoading(false);
-
     }
-  };
-
-  const resetContext = () => {
-    setAuth({
-      access_token: "",
-      signed: false
-    });
   };
 
   const handleLogout = async () => {
@@ -200,10 +247,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const resetContext = () => {
+    setAuth({
+      access_token: "",
+      signed: false
+    });
+  };
+
+
   const value = {
     auth,
     user,
     loading,
+    loadUserByIdAndLocalId,
     handleLogin,
     handleCreateAccount,
     handleResetPassword,

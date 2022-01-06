@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pc-api-8793955021062782330-643",
+  "private_key_id": "a808a0d387da1eb38c3015c554a23ea26e2691f5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCkRS8O+/lyIw3T\noeRAffApoSR/zS4u7gp/0V2MqPGc5cBjhuv+xlQtKtavX6K/fI+wUI5Cv/u/wKuk\nuy2/dxZ4B0oInISa82/8RMWOYSSk7k3u9bP7Bonl6gMmkp++6uC25NMZT3x6Y02r\ny3WGp1dx15GxvzopUqVgPoudE7JsVEBRzwsYes98Ik/x12NC/yc7f4pgazU7PILu\no6EeQ54tBCc9R6btoxIGhUv67e5kVC88BcN9rkk2gtYL/hc+IQwmsQCcXdKF3BWT\nPToxie8ygwyDDZZ5zFnX/7rybloTGPPgnGM/AGovsTFjKqKGk1RnsjNFNjvnvxed\nzQvD15fjAgMBAAECggEALS15y70w1Vseql2T0MjSDCDtUNi1IuMEsDJ8b/rmuCfX\nyYeJz//rlqB5erHqqI8xVWRSO7lhG1N54Uw5QLcXztryWXvyXEsnOVIQox/EXDfN\n5zJb1WXu9vRs+WbJ2E/wjVxRUlyx91boPZ8vK2FKg1yuDRxyenroUJfi/cg1AeWY\n1IbiJP4d4x1d4pN5TljMYFdENGtnzO7FMh3txOjanxLhBJB8YEZaUaMIEUh9+o85\nKK1c/JfMiKv6c6Av5J+WQgjMJ3iXsfyBT6ez4pikr3bbYn7wV0TOM8ATyK2FK3qj\nZtBq6BKq+NAJThZ12sgkFsP91Gd3YvmpAYCe/vJ7wQKBgQDcTJbIENz8jFP+40vq\nghDlj3V7Usm+VGQ+mbXriJJz7IqNhWp2BznXo8weN0+3C2vY7L17ty0wxaC0R62S\nl5oe9fLSuACZKT13U9HhYfpMFPRYr5SnOHPdT+hnAOWogHaQLK/3irJBOVLfTY2h\njcnMbWvoMGoBt5/LfHlsfEyO5wKBgQC+5CiZq+qYLKnUEZfqWqMcYu0FAHSiwbWU\npyZL/FDuJQNQb+rQFGQT+ugVC8NE01Kjdp43C2hPFqgjXP2id0QSxxV4UD3gA9Fc\nvWqdaI0lyL3uNfQQr9S3RLw0zJY+6OEgh3D/hm9Lrr28lDJAstJo+SMeFGG0pHXw\nDEhduSX7pQKBgAg3/0QVhPkTDysqNbHZCmJWGM7yBr7IDTlcqLHR1YznnT+sY41l\ntZ266amS7LFqhqqAIo2UBuaT6Ovw5KPcbg6LpHSCEtuj8zwZb3IWIq1l9ru8STJ3\n47K1AXmeSfMgX8v/Ls1wajgOuG3GSetmC8pJpsXx0HKh9B82VJ1cgcqvAoGBAKmO\nN5Hn5kSsx1ybE/kR8Pfx1t4ufWtj7EnR/m5X+/rL3ZnBDy0sL4ifwS2QeS3VFv4j\nCn2SIGC/mzFuE8wPa+PR+fwYKh2kxn49sUmH6He7Sxkfy15XD/aJkzLC1mGisPUX\n2QLfAlSTLe0nJUvaipK7WLoLGI4/1pIWFuFI57gRAoGBALb/i09bfxAc4RvxWFHH\notAc+lAwssFs84kybnfKgaG50zrRr6Fv1sT47XVwCS8cRggIBEmel1JRSUHK360g\nrS+CqfPLJGB0rGy7u7NkYKXNZpf4EPUjvs3KpFTLk98oRdMVIxwnUxSU5YnVRHgy\n0Veaa46V0xT4ziQGVdaBZu42\n-----END PRIVATE KEY-----\n",
+  "client_email": "marriageapp-appcenter@pc-api-8793955021062782330-643.iam.gserviceaccount.com",
+  "client_id": "100739245865692196772",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/marriageapp-appcenter%40pc-api-8793955021062782330-643.iam.gserviceaccount.com"
+}

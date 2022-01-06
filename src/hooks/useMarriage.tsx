@@ -5,6 +5,7 @@ import { database } from "../databases";
 import { Marriage } from "../databases/model/Marriage";
 import { ErrorResponse } from '../api/types';
 import { AxiosContext } from './useAxios';
+import { useAuth } from './useAuth';
 
 type MarriageContextProps = {
     marriage: MarriageProps;
@@ -46,6 +47,7 @@ export const MarriageProvider = ({ children }: MarriageProviderProps) => {
     const [marriage, setMarriage] = useState<MarriageProps>({} as MarriageProps);
 
     const { api } = useContext(AxiosContext);
+    const {user, loadUserByIdAndLocalId} = useAuth();
 
     const resetContext = () => {
         setMarriage({} as MarriageProps);
@@ -88,6 +90,8 @@ export const MarriageProvider = ({ children }: MarriageProviderProps) => {
                     ...marriageResponse,
                     marriage_id: marriageResponse.id
                 });
+                //TODO: LOAD DATA USER WHEN CHANGE MARRIAGE
+                await loadUserByIdAndLocalId(user.user_id!, String(user.id));
             }
             setLoading(false);
 

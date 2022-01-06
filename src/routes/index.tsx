@@ -5,6 +5,7 @@ import AuthRoutes from './auth';
 import GlobalRoutes from './globalRoutes';
 import LoadingMarriage from '../components/LoadingMarriage';
 import { useMarriage } from '../hooks/useMarriage';
+import { navigationRef } from './rootNavigation';
 
 const Routes = () => {
     const { loading: loadingAuth, user } = useAuth();
@@ -15,7 +16,7 @@ const Routes = () => {
 
 
     return (
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
             {user?.id ? <GlobalRoutes /> : <AuthRoutes />}
         </NavigationContainer>
     );

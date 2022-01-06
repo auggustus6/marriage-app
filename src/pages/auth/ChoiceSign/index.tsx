@@ -48,7 +48,7 @@ const ChoiceSign = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>)
           </Button>
         </ButtonContainer>
 
-        <ButtonContainer>
+        {/* <ButtonContainer>
           <Button
             onPress={handleSignWithGoogle}
             background={theme.colors.white}
@@ -65,7 +65,7 @@ const ChoiceSign = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>)
               Login com Apple
             </Button>
           </ButtonContainer>
-        }
+        } */}
 
         <ButtonContainer>
           <Button

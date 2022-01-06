@@ -22,10 +22,9 @@ import { MuralProps, useMural } from "../../hooks/useMural";
 import { useMarriage } from "../../hooks/useMarriage";
 import { useAuth } from "../../hooks/useAuth";
 import { formatedNames } from "../../utils/formatedName";
+import { imageDefault } from "../../utils/imageDefault";
 
 type PostProps = MuralProps;
-
-const urlDefault = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlhCKYB9NLvGfTTbqjqi_a2M7ZUM79yc48VQ&usqp=CAU"
 
 const Post = ({ picture, description, comments, created_at, id, likes }: PostProps) => {
   const { marriage } = useMarriage();
@@ -44,10 +43,10 @@ const Post = ({ picture, description, comments, created_at, id, likes }: PostPro
       </Header>
 
       <ContainerThumb
-        source={{ uri: picture ? picture : urlDefault }}
+        source={{ uri: picture ? picture : imageDefault() }}
         blurRadius={5}>
         <ThumImage
-          source={{ uri: picture ? picture : urlDefault }} resizeMode="contain" />
+          source={{ uri: picture ? picture : imageDefault() }} resizeMode="contain" />
       </ContainerThumb>
 
       <Actions>
@@ -66,19 +65,7 @@ const Post = ({ picture, description, comments, created_at, id, likes }: PostPro
         <AddComment idMural={id} />
       </ContainerAddComment>
 
-
-      {comments.length > 5 ?
-        <>
-          {comments.map((comment: any) => (
-            <PostComments key={comment.id} {...comment} />
-          ))}
-        </>
-        :
-        comments.map((comment) => (
-          <PostComments key={comment.id} {...comment} />
-        ))
-
-      }
+      {comments.map((comment) => <PostComments key={comment.id} {...comment} />)}
 
     </Container>
   )
