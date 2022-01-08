@@ -17,7 +17,7 @@ export const Container = styled.View.attrs({
   elevation: 4,
 })<CardSelected>`
   ${({ theme, selected }) => css`
-        background:${selected ? theme.colors.primary : theme.colors.white};
+        background:${selected ? theme.colors.secondary : theme.colors.white};
         border-radius:8px;
         flex-direction: column;
         align-items: center;

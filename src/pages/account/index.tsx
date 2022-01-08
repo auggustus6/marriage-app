@@ -20,6 +20,7 @@ import { useTheme } from "styled-components";
 import { useAuth } from "../../hooks/useAuth";
 import { useMarriage } from "../../hooks/useMarriage";
 import { format } from "date-fns";
+import { formatedNames } from "../../utils/formatedName";
 
 const Account = () => {
   const theme = useTheme();
@@ -30,12 +31,7 @@ const Account = () => {
     return user ? user : null;
   }, [user]);
 
-  const formatedNames = (fiance: string, engaged: string) => {
-    const woman = fiance.split(" ")[0];
-    const men = engaged.split(" ")[0];
 
-    return `${woman} & ${men}`;
-  }
 
   const handleClearData = async () => {
     try {
@@ -51,10 +47,10 @@ const Account = () => {
       title="Minha Conta"
       subTtitle={user.name}
     >
-      <ListCards
+      <ListCards<any>
         data={[1 as any, ...user.marriages]}
-        keyExtractor={(item) => String(item.id)}
-        renderItem={({ item, index }) => (
+        keyExtractor={(item: any) => String(item.id)}
+        renderItem={({ item, index }: { item: any, index: any }) => (
           <ContentCard>
             {index === 0 && <CardMarriedBlank />}
             {index !== 0 &&

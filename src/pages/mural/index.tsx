@@ -1,33 +1,20 @@
 import React, { useEffect } from "react";
-import { Fab, Icon } from "native-base"
 import { launchCamera } from 'react-native-image-picker';
 import Post from "../../components/Post";
 
 import {
-  Header,
   ListCards,
 } from './styles';
 import { useMarriage } from "../../hooks/useMarriage";
-import { useMural } from "../../hooks/useMural";
-import TitlePage from "../../components/TitlePage";
-import { AvatarUser } from "../../components/AvatarUser";
+import { MuralProps, useMural } from "../../hooks/useMural";
 import { useNavigation } from "@react-navigation/native";
 import FabButton from "../../components/FabButton";
-import { formatedNames } from "../../utils/formatedName";
-import { ActivityIndicator } from "react-native";
 import { useAuth } from "../../hooks/useAuth";
+import HeadContent from "../../components/HeadContent";
+import PageContainer from "../../components/PageContainer";
+import { FlatListProps } from "react-native";
 
-const HeadContent = ({ fiancee, engaged }: { fiancee: string, engaged: string }) => {
-  return (
-    <Header>
-      <TitlePage
-        title={formatedNames(fiancee, engaged)}
-        subTitle={"O Mural"}
-      />
-      <AvatarUser />
-    </Header>
-  )
-}
+
 
 const Mural = () => {
   const { navigate } = useNavigation();
@@ -74,18 +61,17 @@ const Mural = () => {
   }
 
   return (
-    <>
+    <PageContainer title="O Mural">
       <ListCards
-        ListHeaderComponent={<HeadContent engaged={marriage.engaged} fiancee={marriage.fiancee} />}
         data={murals}
         keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => <Post key={item.id} {...item} />}
+        renderItem={({ item }:FlatListProps<MuralProps>) => <Post key={item.id} {...item} />}
         showsVerticalScrollIndicator={false}
         refreshing={loading}
         onRefresh={() => loadMural(marriage?.marriage_id!)}
       />
       {(user.user_id || user.id) && <FabButton onPress={handleLaunchCamera} />}
-    </>
+    </PageContainer>
   )
 }
 

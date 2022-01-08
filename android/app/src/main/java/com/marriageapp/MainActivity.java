@@ -1,4 +1,4 @@
-package com.marriageapp;
+package com.ticaseiapp;
 
 import android.os.Bundle;
 

@@ -31,7 +31,7 @@ const LoadingMarriage = () => {
       style={{width: RFValue(450), height: RFValue(450)}}
       progress={progress}
       source={require('../../assets/animate/loading_animate.json')}   />
-      <Message>Carregando o casamento...</Message>
+      {/* <Message>Carregando o casamento...</Message> */}
     </Container>
   )
 }

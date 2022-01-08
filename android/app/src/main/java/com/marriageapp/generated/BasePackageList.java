@@ -1,4 +1,4 @@
-package com.marriageapp.generated;
+package com.ticaseiapp.generated;
 
 import java.util.Arrays;
 import java.util.List;

@@ -10,6 +10,7 @@ import { AxiosProvider } from './src/hooks/useAxios';
 import theme from './src/global/styles/theme';
 
 export default function App() {
+
   return (
     <NativeBaseProvider>
       <ThemeProvider theme={theme}>

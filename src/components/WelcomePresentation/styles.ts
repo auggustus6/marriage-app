@@ -13,6 +13,7 @@ export const Welcome = styled.Text`
       text-align:center;
       font-weight:bold;
       margin-bottom:8px;
+      /* font-family:${theme.fonts.regular}; */
     `}
 `;
 

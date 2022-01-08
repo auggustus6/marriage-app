@@ -5,10 +5,10 @@ import styled, { css } from "styled-components/native";
 export const Container = styled.View`
   ${({ theme }) => css`
         flex:1;
-        background: ${theme.colors.primary};
+        background: ${theme.colors.secondary};
         align-items: center;
+        justify-content:center;
         padding:20px;
-        flex-direction: column-reverse;
     `}
 `;
 

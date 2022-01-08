@@ -22,21 +22,31 @@ export type MainRoutesParamList = {
 const Tab = createBottomTabNavigator<MainRoutesParamList>();
 const Stack = createNativeStackNavigator<GlobalRoutesParams>();
 
-const AccountStack = () => (
-    <Stack.Navigator>
-        <Stack.Screen
-            options={{
-                headerShown: false
-            }}
-            name="Account" component={Account} />
-        <Stack.Screen
-            name="Code"
-            options={{
-                header: () => null,
-            }}
-            component={Code} />
-    </Stack.Navigator>
-)
+const AccountStack = () => {
+    const theme = useTheme();
+
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                options={{
+                    headerShown: false
+                }}
+                name="Account" component={Account} />
+            <Stack.Screen
+                name="Code"
+                options={{
+                    headerTitle: "Código de Acesso",
+                    headerStyle: {
+                        backgroundColor: theme.colors.blackButton,
+                    },
+                    headerTitleStyle: {
+                        color:theme.colors.primary,
+                    },
+                }}
+                component={Code} />
+        </Stack.Navigator>
+    )
+}
 
 const MainRoutes = () => {
     const theme = useTheme();
@@ -61,11 +71,11 @@ const MainRoutes = () => {
                 }}
                 name="Mural"
                 component={Mural} />
-            {/* <Tab.Screen
+            <Tab.Screen
                 options={{
-                    tabBarIcon: ({focused}) => <Feather size={24} name="users" color={focused ? theme.colors.primary : theme.colors.text_dark } />
+                    tabBarIcon: ({ focused }) => <Feather size={24} name="users" color={focused ? theme.colors.primary : theme.colors.text_dark} />
                 }}
-                name="Padrinhos" component={GodParents} /> */}
+                name="Padrinhos" component={GodParents} />
 
             <Tab.Screen
                 options={{

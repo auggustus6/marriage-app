@@ -13,9 +13,12 @@ import {
 import { useTheme } from "styled-components";
 import { differenceInDays } from 'date-fns';
 import { useMarriage } from "../../hooks/useMarriage";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
   const { marriage } = useMarriage();
+  const { navigate } = useNavigation();
   const theme = useTheme();
 
   const memoDaysOfMarriage = useMemo(() => {
@@ -30,8 +33,8 @@ const Home = () => {
       <Header>
         <AvatarContainer>
           <Avatar
-            width={200}
-            height={200}
+            width={RFValue(200)}
+            height={RFValue(200)}
             couplePhoto={marriage?.couple_photo!}
             borderColor={theme.colors.secondary}
           />
@@ -40,13 +43,14 @@ const Home = () => {
       </Header>
 
       <Content>
-        <Title size="small">Faltam</Title>
-        <Title size="large">{memoDaysOfMarriage}</Title>
+        <Title allowFontScaling={false} size="small">Faltam</Title>
+        <Title allowFontScaling={false} size="large">{memoDaysOfMarriage}</Title>
         <Days>Dias</Days>
 
         <Button
           colorText={theme.colors.primary}
           background={theme.colors.blackButton}
+          onPress={() => navigate('Pix' as never)}
           transform="uppercase">
           Gravata do noivo
         </Button>

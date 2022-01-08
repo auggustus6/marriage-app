@@ -9,7 +9,7 @@
       "**/*"
     ],
     "android": {
-      "package": "com.marriageapp"
+      "package": "com.ticaseiapp"
     },
   }
 }
