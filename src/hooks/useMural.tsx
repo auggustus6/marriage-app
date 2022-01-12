@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createContext, useContext, useState } from "react";
 import { User } from '../databases/model/User';
-import { useAuth } from './useAuth';
-// import api from "../api";
-import { AxiosContext } from './useAxios';
+import { AxiosContext, useAxios } from './useAxios';
 import { useMarriage } from './useMarriage';
+import { useUser } from './useUser';
 
 type MuralContextProps = {
     mural: MuralProps;
@@ -60,9 +59,9 @@ export const MuralProvider = ({ children }: MuralProviderProps) => {
     const [mural, setMural] = useState<MuralProps>({} as MuralProps);
     const [murals, setMurals] = useState<MuralProps[]>([]);
 
-    const { api } = useContext(AxiosContext);
+    const { api } = useAxios();
     const { marriage } = useMarriage();
-    const { user } = useAuth();
+    const { user } = useUser();
 
     const loadMural = async (idMarriage: number) => {
         try {

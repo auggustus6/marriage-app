@@ -11,10 +11,10 @@ type AvatarUserProps = {
 }
 
 export const AvatarUser = ({ color = "primary" }: AvatarUserProps) => {
-  const {navigate} = useNavigation();
+  const { navigate } = useNavigation();
   const theme = useTheme();
   return (
-    <Container onPress={() => navigate('Account' as any)}>
+    <Container onPress={() => navigate('AccountStack' as any)}>
       <Feather
         name="user"
         size={24}

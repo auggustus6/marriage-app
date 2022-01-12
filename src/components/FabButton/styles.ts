@@ -13,7 +13,7 @@ export const FabContainer = styled(RectButton)<{tabBarHeight: number}>`
       bottom:${tabBarHeight}px;
       right:10px;
 
-      background-color:#f1003b;
+      background-color:${theme.colors.primary};
       align-items:center;
       justify-content:center;
   `}

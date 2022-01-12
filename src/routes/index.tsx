@@ -1,23 +1,21 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { useAuth } from '../hooks/useAuth';
-import AuthRoutes from './auth';
-import GlobalRoutes from './globalRoutes';
+import AuthRoutes from './authRoutes/index.routes';
+import GlobalRoutes from './globalRoutes/index.routes';
 import LoadingMarriage from '../components/LoadingMarriage';
 import { useMarriage } from '../hooks/useMarriage';
 import { navigationRef } from './rootNavigation';
 
 const Routes = () => {
-    const { loading: loadingAuth, user } = useAuth();
+    const { loading: loadingAuth, auth } = useAuth();
     const { loading } = useMarriage();
-
 
     if (loadingAuth || loading) return <LoadingMarriage />;
 
-
     return (
         <NavigationContainer ref={navigationRef}>
-            {user?.id ? <GlobalRoutes /> : <AuthRoutes />}
+            {auth?.signed ? <GlobalRoutes /> : <AuthRoutes />}
         </NavigationContainer>
     );
 }

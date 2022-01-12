@@ -28,5 +28,6 @@ export const ListCards = styled(
   FlatList as new () => FlatList<MuralProps>
 )`
 ${({ theme }) => css`
+    margin-top:80px;
   `}
 `;

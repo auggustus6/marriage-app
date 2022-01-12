@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import { useEffect, createContext } from "react";
-import  { AxiosResponse } from "axios";
-import { AxiosContext } from "./useAxios";
+import { AxiosResponse } from "axios";
+import { useAxios } from "./useAxios";
 import * as AuthSession from 'expo-auth-session';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { database } from "../databases";
 import { User as UserModel } from "../databases/model/User";
+import { useToken } from "./useToken";
 
 export type User = {
   id: string;
@@ -31,20 +32,11 @@ type ResponseAuthLogin = {
   user: User;
 }
 
-type ResponseUserData = {
-  payload: User;
-  statusCode: number;
-}
-
 type AuthContextProps = {
   auth: Auth | null;
-  user: User;
   loading: boolean;
-  loadUserByIdAndLocalId: (userId: number, idUserLocal: string) => Promise<void>;
   handleLogin: (username: string, password: string) => Promise<void>;
   handleCreateAccount: (data: any) => Promise<void>;
-  handleResetPassword: (username: string) => Promise<void>;
-  handleUpdatePassword: (username: string, password: string) => Promise<void>;
   handleLogout: () => Promise<void>;
   resetContext: () => void;
   handleSignWithGoogle: () => Promise<void>;
@@ -58,74 +50,30 @@ type AuthProviderProps = {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [auth, setAuth] = useState<Auth>({} as Auth);
-  const [user, setUser] = useState<User>({} as User);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const { api, error } = useContext(AxiosContext);
-
-  useEffect(() => {
-    if(error){
-      async function validateUserLogged(){
-        await
-        useAsyncStorage('@Marriage_Token')
-          .removeItem();
-        setAuth({} as Auth);
-        setUser({} as User);
-      }
-
-      validateUserLogged();
-    }
-  }, [error])
+  const { api, error: errorApiAxiosUnhatourized } = useAxios();
 
 
   useEffect(() => {
-    async function loadStoragedData() {
-      setLoading(true);
-      try {
-        const response = await database.get<UserModel>('user').query().fetch();
-        const userData = response[0] as unknown as User;
-        setUser(userData);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-      }
-    }
-    loadStoragedData();
-  }, []);
+    async function loadTokenStoraged(){
+      const token = await useToken();
 
-
-  const loadUserByIdAndLocalId = async (userId: number, idUserLocal:string) => {
-    setLoading(true);
-    try {
-      const response: AxiosResponse<ResponseUserData> = await api.get(`/user/${userId}`);
-
-      if (response.data) {
-        const userResponse = response.data.payload;
-
-        database.write(async () => {
-          const userModel = await database.get<UserModel>('user').find(idUserLocal);
-          await userModel.update((user) => {
-            user.user_id = Number(userResponse.id);
-            user.name = userResponse.name;
-            user.email = userResponse.email;
-            user.phoneNumber = userResponse.phoneNumber;
-            user.marriages = userResponse.marriages;
-            user.isAdmin = userResponse.isAdmin;
-          });
-          setUser({
-            ...userResponse,
-            user_id: Number(userResponse.id),
-            id: userModel.id,
-          });
+      if(token){
+        setAuth({
+          access_token: token,
+          signed: true
         });
       }
-      setLoading(false);
-
-    } catch (err) {
-      setLoading(false);
-      throw new Error(JSON.stringify(err));
+      setLoading(false)
     }
-  };
+    loadTokenStoraged();
+  }, [])
+
+  useEffect(() => {
+    if (errorApiAxiosUnhatourized) handleLogout();
+  }, [errorApiAxiosUnhatourized])
+
 
   const handleSignWithGoogle = async () => {
     try {
@@ -154,9 +102,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const response: any = await api.post(`/user`, data);
 
-      if (response.data) {
-        await handleLogin(data.email, data.password);
-      }
+      if (response.data) await handleLogin(data.email, data.password);
       setLoading(false);
 
     } catch (err) {
@@ -177,19 +123,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           useAsyncStorage('@Marriage_Token')
             .setItem(authResponse.access_token);
 
-        database.write(async () => {
-          const userModel = await database.get<UserModel>('user').create(user => {
+        await database.write(async () => {
+          await database.get<UserModel>('user').create(user => {
             user.user_id = Number(authResponse.user!.id);
             user.name = authResponse.user!.name;
             user.email = authResponse.user!.email;
             user.phoneNumber = authResponse.user!.phoneNumber;
             user.marriages = authResponse.user!.marriages;
             user.isAdmin = authResponse.user!.isAdmin;
-          });
-          setUser({
-            ...authResponse.user,
-            user_id: Number(authResponse.user!.id),
-            id: userModel.id,
           });
           setAuth({
             access_token: authResponse.access_token,
@@ -198,8 +139,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           setLoading(false);
         });
       }
-
-
     } catch (err) {
       setLoading(false);
       throw new Error(JSON.stringify(err));
@@ -207,26 +146,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
 
-  const handleResetPassword = async (username: string) => {
-    setLoading(true);
-    try {
-      await api.post(`user/resetPassword`, { username });
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-    }
-  };
-
-  const handleUpdatePassword = async (username: string, password: string) => {
-    setLoading(true);
-    try {
-      await api.post(`/user/updatePassword`, { username, password });
-      await handleLogin(username, password);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-    }
-  };
 
   const handleLogout = async () => {
     try {
@@ -241,7 +160,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         signed: false
       });
 
-      setUser({} as User);
     } catch (err) {
       throw new Error(JSON.stringify(err));
     }
@@ -254,16 +172,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
   };
 
-
   const value = {
     auth,
-    user,
     loading,
-    loadUserByIdAndLocalId,
     handleLogin,
     handleCreateAccount,
-    handleResetPassword,
-    handleUpdatePassword,
     handleSignWithGoogle,
     resetContext,
     handleLogout,

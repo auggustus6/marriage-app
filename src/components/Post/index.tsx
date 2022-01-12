@@ -20,16 +20,16 @@ import PostComments from "../PostComments";
 import AddComment from "../AddComment";
 import { MuralProps, useMural } from "../../hooks/useMural";
 import { useMarriage } from "../../hooks/useMarriage";
-import { useAuth } from "../../hooks/useAuth";
 import { formatedNames } from "../../utils/formatedName";
 import { imageDefault } from "../../utils/imageDefault";
+import { useUser } from "../../hooks/useUser";
 
 type PostProps = MuralProps;
 
 const Post = ({ picture, description, comments, created_at, id, likes }: PostProps) => {
   const { marriage } = useMarriage();
   const { handleToggleLike, loading } = useMural();
-  const { user } = useAuth();
+  const { user } = useUser();
   const theme = useTheme();
 
   return (

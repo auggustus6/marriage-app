@@ -4,18 +4,18 @@ import Button from "../../components/Button";
 import {
   Container,
   ContainerForm,
-  ContainerButton
+  Text
 } from './styles';
 import { useTheme } from "styled-components";
 import { useMarriage } from "../../hooks/useMarriage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { GlobalRoutesParams } from "../../routes/globalRoutes";
+import { GlobalRoutesParams } from "../../routes/globalRoutes/index.routes";
+import { AccountRoutesParams } from "../../routes/account/index.routes";
+import { Alliance } from "../../config/svg";
+import { RFValue } from "react-native-responsive-fontsize";
 
-const Code = ({ navigation }: NativeStackScreenProps<GlobalRoutesParams>) => {
-  // const [code, setCode] = useState('ana-batista-pedro-soares-1641422667971');
-  // const [code, setCode] = useState('carlos-affonso-chrislainne-1641595603060');
-  const [code, setCode] = useState('carlos-cesar-livia-torres-1641595555799');
-  // const [code, setCode] = useState('laura-bellini-carlos-augusto-1640806656030');
+const Code = ({ navigation }: NativeStackScreenProps<GlobalRoutesParams & AccountRoutesParams>) => {
+  const [code, setCode] = useState('');
 
   const theme = useTheme();
   const {
@@ -31,23 +31,33 @@ const Code = ({ navigation }: NativeStackScreenProps<GlobalRoutesParams>) => {
     }
   }
 
+  const handleNavigate = async () => {
+      navigation.navigate("SelectedMarriagePage");
+  }
+
   return (
     <Container>
+      <Alliance width={RFValue(120)} height={RFValue(120)} />
       <ContainerForm>
+
         <CustomInput
-          label="Código do casamento:"
           labelColor={theme.colors.white}
           placeholder="Insira o código do casamento aqui"
           value={code}
           onChangeText={setCode}
         />
 
-        <ContainerButton>
           <Button
             onPress={handleCode}
-            background="#393939"
+            background={theme.colors.white}
             colorText={theme.colors.primary}>ACESSAR CASAMENTO</Button>
-        </ContainerButton>
+
+        <Text>Ou</Text>
+
+          <Button
+            onPress={handleNavigate}
+            background={theme.colors.blackButton}
+            colorText={theme.colors.white}>LISTAR CASAMENTOS</Button>
       </ContainerForm>
 
     </Container>

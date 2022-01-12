@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { createContext } from "react";
+import React, { useContext, useState, createContext } from "react";
 import axios, {AxiosInstance} from "axios";
 import { useToken } from "./useToken";
-import { navigate } from "../routes/rootNavigation";
 
 type AxiosProps = {
     api:AxiosInstance;
@@ -13,7 +11,6 @@ export const AxiosContext = createContext({} as AxiosProps);
 
 export const AxiosProvider: React.FC = ({ children }) => {
     const [error, setError] = useState(false);
-
 
     const api = axios.create({
         baseURL: "https://api-marriage.herokuapp.com",
@@ -48,6 +45,10 @@ export const AxiosProvider: React.FC = ({ children }) => {
             {children}
         </AxiosContext.Provider>
     )
+}
+
+export const useAxios = () => {
+    return useContext(AxiosContext);
 }
 
 

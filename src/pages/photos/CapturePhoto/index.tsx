@@ -10,7 +10,7 @@ import {
 } from './styles';
 import { RFValue } from "react-native-responsive-fontsize";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { GlobalRoutesParams } from "../../../routes/globalRoutes";
+import { GlobalRoutesParams } from "../../../routes/globalRoutes/index.routes";
 import { useMural } from "../../../hooks/useMural";
 import { ActivityIndicator } from "react-native";
 import { useTheme } from "styled-components";

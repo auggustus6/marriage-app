@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { createContext, useContext, useState } from "react";
 import { database } from "../databases";
 import { Marriage } from "../databases/model/Marriage";
-import { ErrorResponse } from '../api/types';
-import { AxiosContext } from './useAxios';
-import { useAuth } from './useAuth';
+import { useAxios } from './useAxios';
+import { useUser } from './useUser';
 
 type MarriageContextProps = {
     marriage: MarriageProps;
+    marriages: MarriageProps[];
     code: string;
     loading: boolean;
+    loadAllMarriages: () => Promise<void>;
     handleSignInWithCode: (code: string) => Promise<void>
     resetContext: () => void;
 }
@@ -34,20 +35,25 @@ export type MarriageProps = {
 }
 
 type PayloadMarriageProps = {
-    payload: MarriageProps;
+    payload: MarriageProps
+    statusCode: number;
+}
+
+type PayloadAllMarriagesProps = {
+    payload: MarriageProps[]
     statusCode: number;
 }
 
 const MarriageContext = createContext({} as MarriageContextProps);
 
-
 export const MarriageProvider = ({ children }: MarriageProviderProps) => {
     const [code, setCode] = useState("");
     const [loading, setLoading] = useState(false);
     const [marriage, setMarriage] = useState<MarriageProps>({} as MarriageProps);
+    const [marriages, setMarriages] = useState<MarriageProps[]>([]);
 
-    const { api } = useContext(AxiosContext);
-    const {user, loadUserByIdAndLocalId} = useAuth();
+    const { api } = useAxios();
+    const { user, loadUserByIdAndLocalId } = useUser();
 
     const resetContext = () => {
         setMarriage({} as MarriageProps);
@@ -65,9 +71,19 @@ export const MarriageProvider = ({ children }: MarriageProviderProps) => {
             }
             setLoading(false);
         }
-
         loadMarriageDataOffLine();
     }, []);
+
+
+    const loadAllMarriages = async () => {
+        try {
+            const response = await api.get('/marriage');
+            const { data } = response;
+            setMarriages(data);
+        } catch (err:any) {
+            throw new Error(err);
+        }
+    }
 
     const handleSignInWithCode = async (code: string) => {
         try {
@@ -102,7 +118,7 @@ export const MarriageProvider = ({ children }: MarriageProviderProps) => {
     }
 
     return (
-        <MarriageContext.Provider value={{ code, marriage, handleSignInWithCode, resetContext, loading }}>
+        <MarriageContext.Provider value={{ code, marriage, marriages, loadAllMarriages,  handleSignInWithCode, resetContext, loading }}>
             {children}
         </MarriageContext.Provider>
     )

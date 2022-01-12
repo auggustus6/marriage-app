@@ -1,5 +1,5 @@
 import { RectButton } from "react-native-gesture-handler";
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import {  RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";
 
 

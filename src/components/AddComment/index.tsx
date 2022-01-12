@@ -4,7 +4,7 @@ import {
   Container,
   Input
 } from './styles';
-import { useTheme } from "styled-components";
+import { useTheme } from "styled-components/native";
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import { useMural } from '../../hooks/useMural';
 
@@ -24,13 +24,14 @@ const AddComment = ({idMural, ...rest}: AddCommentProps) => {
       await handleAddComment(comment, idMural);
       setValue(""); 
     }catch(err){
+      setValue(""); 
     }
   }
 
   return (
-    <Container>
+    <Container testID={rest.testID}>
       <Input placeholder="Adicionar comentário" value={value} onChangeText={setValue}/>
-      <RectButton  onPress={() => onPress(value)}>
+      <RectButton  onPress={() => onPress(value)} testID="button-add-comment">
         <MaterialIcons size={28} color={theme.colors.text} name="send" />
       </RectButton>
     </Container>

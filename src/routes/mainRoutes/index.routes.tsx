@@ -3,12 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../../pages/home';
 import Mural from '../../pages/mural';
 import GodParents from '../../pages/godParents';
-import Code from '../../pages/code';
-import Account from '../../pages/account';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { GlobalRoutesParams } from '../globalRoutes';
 import { useTheme } from 'styled-components';
 import { Feather } from '@expo/vector-icons';
+import AccountRoutes from '../account/index.routes';
 
 
 export type MainRoutesParamList = {
@@ -20,33 +17,6 @@ export type MainRoutesParamList = {
 };
 
 const Tab = createBottomTabNavigator<MainRoutesParamList>();
-const Stack = createNativeStackNavigator<GlobalRoutesParams>();
-
-const AccountStack = () => {
-    const theme = useTheme();
-
-    return (
-        <Stack.Navigator>
-            <Stack.Screen
-                options={{
-                    headerShown: false
-                }}
-                name="Account" component={Account} />
-            <Stack.Screen
-                name="Code"
-                options={{
-                    headerTitle: "Código de Acesso",
-                    headerStyle: {
-                        backgroundColor: theme.colors.blackButton,
-                    },
-                    headerTitleStyle: {
-                        color:theme.colors.primary,
-                    },
-                }}
-                component={Code} />
-        </Stack.Navigator>
-    )
-}
 
 const MainRoutes = () => {
     const theme = useTheme();
@@ -75,14 +45,16 @@ const MainRoutes = () => {
                 options={{
                     tabBarIcon: ({ focused }) => <Feather size={24} name="users" color={focused ? theme.colors.primary : theme.colors.text_dark} />
                 }}
-                name="Padrinhos" component={GodParents} />
+                name="Padrinhos"
+                component={GodParents} />
 
             <Tab.Screen
                 options={{
                     tabBarLabel: "Conta",
                     tabBarIcon: ({ focused }) => <Feather size={24} name="settings" color={focused ? theme.colors.primary : theme.colors.text_dark} />
                 }}
-                name="AccountStack" component={AccountStack} />
+                name="AccountStack"
+                component={AccountRoutes} />
 
         </Tab.Navigator>
     );

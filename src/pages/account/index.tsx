@@ -21,10 +21,12 @@ import { useAuth } from "../../hooks/useAuth";
 import { useMarriage } from "../../hooks/useMarriage";
 import { format } from "date-fns";
 import { formatedNames } from "../../utils/formatedName";
+import { useUser } from "../../hooks/useUser";
 
 const Account = () => {
   const theme = useTheme();
-  const { handleLogout, user } = useAuth();
+  const {  user } = useUser();
+  const { handleLogout } = useAuth();
   const { marriage, handleSignInWithCode, resetContext } = useMarriage();
 
   const dataUser = useMemo(() => {

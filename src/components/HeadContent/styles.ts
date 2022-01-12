@@ -5,9 +5,8 @@ import styled, { css } from "styled-components/native";
 export const Header = styled.SafeAreaView`
   ${({ theme }) => css`
       padding:20px;
-      padding-bottom:40px;
-      padding-top:40px;
-      height:${RFValue(20)}px;
+      padding-top:60px;
+      height:${RFValue(80)}px;
 
       align-items: center;
       flex-direction: row;

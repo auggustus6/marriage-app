@@ -15,7 +15,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { useAuth } from '../../../hooks/useAuth';
 import CustomInput from '../../../components/Form/CustomInput';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { AuthRoutesParamList } from '../../../routes/auth';
+import { AuthRoutesParamList } from '../../../routes/authRoutes/index.routes';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import CustomInputPhone from '../../../components/Form/CustomInputPhone';

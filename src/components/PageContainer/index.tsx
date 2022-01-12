@@ -8,7 +8,7 @@ import {
 type PageContainerProps = {
   title?: string;
   subTtitle?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const PageContainer = ({ children, title, subTtitle }: PageContainerProps) => {

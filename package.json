@@ -11,6 +11,7 @@
   "dependencies": {
     "@nozbe/watermelondb": "^0.23.0",
     "@react-native-async-storage/async-storage": "^1.15.11",
+    "@react-native-community/netinfo": "6.0.0",
     "@react-navigation/bottom-tabs": "^6.0.8",
     "@react-navigation/native": "^6.0.5",
     "@react-navigation/native-stack": "^6.2.3",
@@ -50,6 +51,10 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-decorators": "^7.15.8",
+    "@testing-library/jest-native": "^4.0.4",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/react-native": "^9.0.0",
+    "@types/jest": "^27.4.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "@types/styled-components": "^5.1.14",
@@ -60,12 +65,10 @@
     "babel-preset-react-native": "^4.0.1",
     "detox": "^18.23.1",
     "jest": "^27.3.1",
+    "jest-styled-components": "^7.0.8",
     "plop": "^2.7.4",
     "regenerator-runtime": "^0.13.9",
     "typescript": "~4.0.0"
-  },
-  "jest": {
-    "preset": "react-native"
   },
   "private": true
 }

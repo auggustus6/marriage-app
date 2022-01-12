@@ -5,13 +5,16 @@ import {schemas} from './schema';
 import {Marriage} from './model/Marriage';
 import { User } from './model/User';
 
-const adapter = new SQLiteAdapter({
-    schema: schemas
+const watermelonAdapter = SQLiteAdapter;
+const adapter = new watermelonAdapter({
+  schema: schemas,
 });
 
 export const database = new Database({
     adapter,
     modelClasses: [Marriage, User],
 });
+
+
 
 
