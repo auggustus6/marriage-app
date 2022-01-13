@@ -15,11 +15,12 @@ type CustomInputProps = {
 const CustomInput = ({ label, labelColor,  onChangeText, value, testID, placeholder, placeholderTextColor, secureTextEntry }: CustomInputProps) => {
   return (
     <Container>
-      {label && <Label labelColor={labelColor}>{label}</Label>}
+      {label && <Label labelColor={labelColor} testID="label_test">{label}</Label>}
       <Input 
          onChangeText={onChangeText}
          value={value}
          testID={testID}
+         autoCapitalize="none"
          secureTextEntry={secureTextEntry}
          placeholder={placeholder}
          placeholderTextColor={placeholderTextColor}
