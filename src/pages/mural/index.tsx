@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { PermissionsAndroid } from 'react-native';
 import { launchCamera } from 'react-native-image-picker';
 import Post from "../../components/Post";
 import {
@@ -24,51 +25,77 @@ const Mural = () => {
     loadMural(marriage?.marriage_id!);
   }, [marriage?.id]);
 
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: "Deseja permitir o acesso à camera?",
+          message:
+            "Marriage App deseja permitir o acesso à sua camera",
+          buttonNeutral: "Pergunte-me depos",
+          buttonNegative: "Cancelar",
+          buttonPositive: "Permitir"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      throw new Error(JSON.stringify(err));
+    }
+  };
+
   const handleLaunchCamera = async () => {
 
     try {
-      const result = await launchCamera({
-        mediaType: "photo",
-        quality: 1,
-        saveToPhotos: false,
-      });
+      const granted = await requestCameraPermission();
 
-      if (result.errorCode) throw new Error(result.errorMessage);
+      if (granted) {
+        const result = await launchCamera({
+          mediaType: "photo",
+          quality: 1,
+          saveToPhotos: false,
+        });
 
-      if (result.didCancel) return;
+        if (result.errorCode) throw new Error(result.errorMessage);
 
-      if (result.assets) {
-        const dataFileCamera = result.assets[0];
-        const file = {
-          name: dataFileCamera.fileName!,
-          type: dataFileCamera.type!,
-          size: dataFileCamera.fileSize!,
-          uri: dataFileCamera.uri
+        if (result.didCancel) return;
+
+        if (result.assets) {
+          const dataFileCamera = result.assets[0];
+          const file = {
+            name: dataFileCamera.fileName!,
+            type: dataFileCamera.type!,
+            size: dataFileCamera.fileSize!,
+            uri: dataFileCamera.uri
+          }
+          navigate('CapturePhoto' as never, {
+            photoFile: file,
+            photoUri: dataFileCamera.uri
+          } as never);
         }
-        navigate('CapturePhoto' as never, {
-          photoFile: file,
-          photoUri: dataFileCamera.uri
-        } as never);
       }
-
     } catch (err) {
     }
   }
 
   return (
     <Container>
-    <PageContainer title="O Mural"/>
-        <ListCards<any>
-          data={murals}
-          keyExtractor={(item: any) => String(item.id)}
-          renderItem={({ item }: any) => <Post key={item.id} {...item} />}
-          showsVerticalScrollIndicator={false}
-          refreshing={loading}
-          onRefresh={() => loadMural(marriage?.marriage_id!)}
-        />
-        {(user.user_id || user.id) && <FabButton onPress={handleLaunchCamera} />}
-      </Container>
-   
+      <PageContainer title="O Mural" />
+      <ListCards<any>
+        data={murals}
+        keyExtractor={(item: any) => String(item.id)}
+        renderItem={({ item }: any) => <Post key={item.id} {...item} />}
+        showsVerticalScrollIndicator={false}
+        refreshing={loading}
+        onRefresh={() => loadMural(marriage?.marriage_id!)}
+      />
+      {(user.user_id || user.id) && <FabButton onPress={handleLaunchCamera} />}
+    </Container>
+
   )
 }
 

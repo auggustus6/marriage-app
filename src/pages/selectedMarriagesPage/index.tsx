@@ -12,15 +12,10 @@ const SelectedMarriagePage = () => {
     const { loadAllMarriages, marriages, loading, handleSignInWithCode } = useMarriage();
     const [filter, setFilter] = useState("");
     const [marriagesFiltered, setMarriagesFiltered] = useState<MarriageProps[]>([]);
+    let mounted = true; 
 
     useEffect(() => {
-        let mounted = true; 
-
-        if(mounted)loadAllMarriages();
-
-        return () => {
-            mounted = false;
-        }
+         loadAllMarriages();
     }, []);
 
     const handleFilterMarriages = useCallback((text) => {
@@ -36,7 +31,7 @@ const SelectedMarriagePage = () => {
     const memoMarriagesData = useMemo(() => {
         if(filter) return marriagesFiltered;
         return marriages;
-    }, [filter, marriagesFiltered]);
+    }, [filter, marriages]);
 
     const handleSelectMarriaged = async (codeMarriaged: string) => {
         try {

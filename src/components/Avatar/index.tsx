@@ -1,4 +1,5 @@
 import React from "react";
+import { imageDefault } from "../../utils/imageDefault";
 import {
   Container,
 } from './styles';
@@ -19,9 +20,11 @@ const Avatar = ({
   return (
     <Container
       width={width}
+      accessibilityRole="image"
+      accessibilityLabel="Icone de imagem do usuário"
       height={height}
       resizeMode="cover"
-      source={{ uri: couplePhoto }}
+      source={{ uri: imageDefault(couplePhoto)   }}
       borderColor={borderColor}
     />
   )

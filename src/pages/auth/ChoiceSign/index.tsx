@@ -38,7 +38,7 @@ const ChoiceSign = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>)
           <Button
             background={theme.colors.secondary}
             onPress={handleNavigate}
-            colorText={theme.colors.text_dark}>
+            colorText={theme.colors.white}>
             Fazer Login
           </Button>
         </ButtonContainer>

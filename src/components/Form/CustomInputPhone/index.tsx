@@ -10,6 +10,7 @@ type CustomInputPhoneProps = {
   label?: string;
   labelColor?: string;
   testID?: string;
+  onChangeText: (text: string) => void;
 } & PhoneInputProps
 
 
@@ -17,9 +18,9 @@ const CustomInputPhone = ({ label, labelColor, onChangeText, value, placeholder,
   return (
     <Container>
       {label && <Label labelColor={labelColor}>{label}</Label>}
-      <Input
-        onChangeText={onChangeText}
+      <Input<any>
         value={value}
+        onChangeText={onChangeText}
         ref={ref}
         placeholder={placeholder}
         defaultValue={value}

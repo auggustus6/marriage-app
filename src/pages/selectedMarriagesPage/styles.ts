@@ -1,10 +1,11 @@
 import styled, { css } from "styled-components/native";
-import {  FlatList } from "react-native";
+import {  FlatList, Platform, StatusBar } from "react-native";
 import { MarriageProps } from "../../hooks/useMarriage";
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
   ${({ theme }) => css`
         flex:1;
+        padding-top: ${Platform.OS === "android" ? StatusBar.currentHeight : 0}px;
     `}
 `;
 

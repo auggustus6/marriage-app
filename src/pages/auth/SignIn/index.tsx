@@ -21,7 +21,7 @@ import { Formik } from 'formik';
 
 const SignIn = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => {
   const theme = useTheme();
-  const { handleLogin } = useAuth();
+  const { handleLogin, loading } = useAuth();
 
   const validateSchema = Yup.object().shape({
     email: Yup
@@ -85,6 +85,7 @@ const SignIn = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => 
                   <Button
                     onPress={() => handleSubmit()}
                     background={theme.colors.blackButton}
+                    enabled={!loading}
                     colorText={theme.colors.white}>
                     Entrar
                   </Button>

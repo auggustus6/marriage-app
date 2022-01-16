@@ -26,7 +26,6 @@ export const Text = styled.Text`
         margin:20px 0px;
         color:${theme.colors.white};
         font-size:${RFValue(22)}px;
-        font-weight:bold;
     `}
 `;
 

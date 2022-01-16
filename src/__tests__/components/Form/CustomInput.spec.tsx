@@ -2,8 +2,6 @@ import React from 'react';
 import CustomInput from '../../../components/Form/CustomInput';
 import { render } from '../../../utils/tests/helpers';
 
-
-
 describe('Tests render AddComment component', () => {
     it('should render not it label', () => {
         const { queryByTestId } = render(
