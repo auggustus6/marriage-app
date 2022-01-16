@@ -21,7 +21,7 @@ const PixPage = () => {
 
             <Button
                 background={theme.colors.blackButton}
-                colorText={theme.colors.primary}>
+                colorText={theme.colors.white}>
                 COPIAR CHAVE PIX
             </Button>
 

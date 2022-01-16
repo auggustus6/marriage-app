@@ -2,7 +2,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";
 import { AvatarProps } from ".";
 
-export const Container = styled.Image.attrs<AvatarProps>(({ borderColor }) => ({
+export const Container = styled.Image.attrs<AvatarProps>(({ borderColor = "#B62738" }) => ({
   borderWidth:5,
   borderColor
 }))<AvatarProps>`

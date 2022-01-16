@@ -20,7 +20,7 @@ const AccountRoutes = () => {
         headerTitle: "Encontre um casamento",
 
         headerTitleStyle: {
-            color: theme.colors.text,
+            color: theme.colors.blackButton
         },
     }
     return (

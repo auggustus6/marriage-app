@@ -31,7 +31,6 @@ const Post = ({ picture, description, comments, created_at, id, likes }: PostPro
   const { handleToggleLike, loading } = useMural();
   const { user } = useUser();
   const theme = useTheme();
-
   return (
     <Container>
       <Header>
@@ -53,7 +52,7 @@ const Post = ({ picture, description, comments, created_at, id, likes }: PostPro
         <RectButton
           enabled={!loading}
           onPress={() => handleToggleLike(id)}>
-          {(likes.includes(String(user.user_id!)) || likes.includes(String(user.id!))) ? <FontAwesome name="heart" size={RFValue(28)} color={theme.colors.attention} /> : <FontAwesome name="heart-o" size={RFValue(28)} color={theme.colors.attention} />}
+          {likes.includes(String(user.user_id)) ? <FontAwesome name="heart" size={RFValue(28)} color={theme.colors.attention} /> : <FontAwesome name="heart-o" size={RFValue(28)} color={theme.colors.attention} />}
         </RectButton>
       </Actions>
 

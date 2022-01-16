@@ -16,12 +16,13 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 import { useAuth } from "../../hooks/useAuth";
 import { imageDefault } from "../../utils/imageDefault";
+import { useUser } from "../../hooks/useUser";
 
 type PostCommentsProps = CommentsProps;
 
 const PostComments = ({ created_at, description, id, mural_id, user_id, user: userComment }: PostCommentsProps) => {
   const { handleRemoveComment, loading } = useMural();
-  const { user } = useAuth();
+  const { user } = useUser();
   const theme = useTheme();
 
   const onPressRemove = async (idComment: number) => {

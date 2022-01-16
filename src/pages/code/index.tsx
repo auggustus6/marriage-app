@@ -49,8 +49,8 @@ const Code = ({ navigation }: NativeStackScreenProps<GlobalRoutesParams & Accoun
 
           <Button
             onPress={handleCode}
-            background={theme.colors.white}
-            colorText={theme.colors.primary}>ACESSAR CASAMENTO</Button>
+            background={theme.colors.blackButton}
+            colorText={theme.colors.white}>ACESSAR CASAMENTO</Button>
 
         <Text>Ou</Text>
 

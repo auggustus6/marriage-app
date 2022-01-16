@@ -25,7 +25,7 @@ import { useUser } from "../../hooks/useUser";
 
 const Account = () => {
   const theme = useTheme();
-  const {  user } = useUser();
+  const { user } = useUser();
   const { handleLogout } = useAuth();
   const { marriage, handleSignInWithCode, resetContext } = useMarriage();
 
@@ -33,7 +33,9 @@ const Account = () => {
     return user ? user : null;
   }, [user]);
 
-
+  const fakeMarriage = {
+    id: 0
+  }
 
   const handleClearData = async () => {
     try {
@@ -43,35 +45,35 @@ const Account = () => {
     }
   }
 
-
   return (
     <PageContainer
       title="Minha Conta"
       subTtitle={user.name}
     >
-      <ListCards<any>
-        data={[1 as any, ...user.marriages]}
-        keyExtractor={(item: any) => String(item.id)}
-        renderItem={({ item, index }: { item: any, index: any }) => (
-          <ContentCard>
-            {index === 0 && <CardMarriedBlank />}
-            {index !== 0 &&
-              <ButtonSelectedMarriaged
-                onPress={() => handleSignInWithCode(item.code)}>
-                <CardMarried
-                  couplePhoto={item.couple_photo}
-                  titleMarriage={formatedNames(item.fiancee, item.engaged)}
-                  dateMarriage={format(new Date(item.date), "dd/MM/yyyy")}
-                  selected={marriage.code === item.code} />
-              </ButtonSelectedMarriaged>
-            }
-          </ContentCard>
-        )}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 5 }}
-      />
-
+      {user.marriages ? (
+        <ListCards<any>
+          data={[fakeMarriage as any, ...user?.marriages]}
+          keyExtractor={(item: any) => String(item.id)}
+          renderItem={({ item, index }: { item: any, index: any }) => (
+            <ContentCard>
+              {index === 0 && <CardMarriedBlank />}
+              {index !== 0 &&
+                <ButtonSelectedMarriaged
+                  onPress={() => handleSignInWithCode(item.code)}>
+                  <CardMarried
+                    couplePhoto={item.couple_photo}
+                    titleMarriage={formatedNames(item.fiancee, item.engaged)}
+                    dateMarriage={format(new Date(item.date), "dd/MM/yyyy")}
+                    selected={marriage.code === item.code} />
+                </ButtonSelectedMarriaged>
+              }
+            </ContentCard>
+          )}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 5 }}
+        />
+      ) : undefined}
 
       <Container>
         <KeyboardAvoidingView

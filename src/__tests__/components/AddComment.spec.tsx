@@ -1,8 +1,6 @@
 import React from 'react';
 import AddComment from "../../components/AddComment";
-import { fireEvent, render, act } from "../../utils/tests/helpers";
-
-
+import { render, fireEvent, act } from '../../utils/tests/helpers';
 jest.mock('../../databases');
 
 describe('Tests render AddComment component', () => {

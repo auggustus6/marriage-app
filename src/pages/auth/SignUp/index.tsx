@@ -20,6 +20,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import CustomInputPhone from '../../../components/Form/CustomInputPhone';
 import PhoneInput from 'react-native-phone-number-input';
+import { Text } from 'react-native';
 
 const SignUp = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => {
     const theme = useTheme();
@@ -84,6 +85,7 @@ const SignUp = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => 
                                 value={values.name}
                                 placeholder="Insira seu e-mail cadastrado."
                             />
+                            <Text>{errors.name}</Text>
 
                             <CustomInput
                                 label="E-mail"
@@ -93,6 +95,8 @@ const SignUp = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => 
                                 value={values.email}
                                 placeholder="Insira seu e-mail cadastrado."
                             />
+                            <Text>{errors.email}</Text>
+
 
                             <CustomInput
                                 labelColor={theme.colors.white}
@@ -103,6 +107,8 @@ const SignUp = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => 
                                 secureTextEntry
                                 placeholder="Insira sua senha de 8 caracteres."
                             />
+                            <Text>{errors.password}</Text>
+
 
                             <CustomInput
                                 labelColor={theme.colors.white}
@@ -113,6 +119,8 @@ const SignUp = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => 
                                 secureTextEntry
                                 placeholder="Insira sua senha de 8 caracteres."
                             />
+                            <Text>{errors.confirmPassword}</Text>
+
 
                             <CustomInputPhone
                                 label="Telefone (WhatsApp)"
@@ -131,7 +139,8 @@ const SignUp = ({ navigation }: NativeStackScreenProps<AuthRoutesParamList>) => 
                                     <Button
                                         testID="submit-button"
                                         onPress={() => handleSubmit()}
-                                        background={theme.colors.blackButton} colorText={theme.colors.primary}>
+                                        background={theme.colors.blackButton}
+                                        colorText={theme.colors.primary}>
                                         Criar Conta
                                     </Button>
                                 </ButtonContainer>
