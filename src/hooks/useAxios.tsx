@@ -13,8 +13,8 @@ export const AxiosProvider: React.FC = ({ children }) => {
     const [error, setError] = useState(false);
 
     const api = axios.create({
-        baseURL: "https://api-marriage.herokuapp.com",
-        // baseURL: "http://192.168.15.6:4000",
+        // baseURL: "https://api-marriage.herokuapp.com",
+        baseURL: "http://192.168.15.6:4000",
     });
 
     api.interceptors.request.use(
@@ -35,7 +35,7 @@ export const AxiosProvider: React.FC = ({ children }) => {
             return config;
         },
         async (error) => {
-            if(error) setError(true);
+            if(error) setError(false);
             return Promise.reject(error)
         },
     );

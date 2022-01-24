@@ -1,7 +1,7 @@
 import React from 'react';
 import { createContext, useContext, useState } from "react";
 import { User } from '../databases/model/User';
-import { AxiosContext, useAxios } from './useAxios';
+import {  useAxios } from './useAxios';
 import { useMarriage } from './useMarriage';
 import { useUser } from './useUser';
 

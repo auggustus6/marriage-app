@@ -7,6 +7,7 @@ import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { database } from "../databases";
 import { User as UserModel } from "../databases/model/User";
 import { useToken } from "./useToken";
+import { useAlert } from "./useAlert";
 
 export type User = {
   id: string;
@@ -53,13 +54,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState(true);
 
   const { api, error: errorApiAxiosUnhatourized } = useAxios();
+  const { show } = useAlert();
 
 
   useEffect(() => {
-    async function loadTokenStoraged(){
+    async function loadTokenStoraged() {
       const token = await useToken();
 
-      if(token){
+      if (token) {
         setAuth({
           access_token: token,
           signed: true
@@ -103,8 +105,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const response: any = await api.post(`/user`, data);
 
       if (response.data) await handleLogin(data.email, data.password);
+      show("Usuário cadastrado com sucesso", "success");
       setLoading(false);
-
     } catch (err) {
       setLoading(false);
       throw new Error(JSON.stringify(err));

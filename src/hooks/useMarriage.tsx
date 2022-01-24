@@ -5,6 +5,7 @@ import { database } from "../databases";
 import { Marriage } from "../databases/model/Marriage";
 import { useAxios } from './useAxios';
 import { useUser } from './useUser';
+import { useAlert } from './useAlert';
 
 type MarriageContextProps = {
     marriage: MarriageProps;
@@ -54,6 +55,7 @@ export const MarriageProvider = ({ children }: MarriageProviderProps) => {
 
     const { api } = useAxios();
     const { user, loadUserByIdAndLocalId } = useUser();
+    const { show } = useAlert();
 
     const resetContext = () => {
         setMarriage({} as MarriageProps);
@@ -80,7 +82,7 @@ export const MarriageProvider = ({ children }: MarriageProviderProps) => {
             const response = await api.get('/marriage');
             const { data } = response;
             setMarriages(data);
-        } catch (err:any) {
+        } catch (err: any) {
             throw new Error(err);
         }
     }
@@ -113,12 +115,13 @@ export const MarriageProvider = ({ children }: MarriageProviderProps) => {
 
         } catch (err: any) {
             setLoading(false);
+            show("Não foi possível entrar no casamento, verifique o código e tente novamente.", "error");
             throw new Error(err);
         }
     }
 
     return (
-        <MarriageContext.Provider value={{ code, marriage, marriages, loadAllMarriages,  handleSignInWithCode, resetContext, loading }}>
+        <MarriageContext.Provider value={{ code, marriage, marriages, loadAllMarriages, handleSignInWithCode, resetContext, loading }}>
             {children}
         </MarriageContext.Provider>
     )
