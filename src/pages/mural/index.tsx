@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, NativeModules } from 'react-native';
 import { launchCamera } from 'react-native-image-picker';
 import Post from "../../components/Post";
 import {
@@ -13,7 +13,6 @@ import FabButton from "../../components/FabButton";
 import PageContainer from "../../components/PageContainer";
 import { useUser } from "../../hooks/useUser";
 
-
 const Mural = () => {
   const { navigate } = useNavigation();
   const { marriage } = useMarriage();
@@ -26,6 +25,7 @@ const Mural = () => {
   }, [marriage?.id]);
 
   const requestCameraPermission = async () => {
+
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
@@ -49,37 +49,37 @@ const Mural = () => {
   };
 
   const handleLaunchCamera = async () => {
+    NativeModules.CameraModule.onClick;
+    // try {
+    //   const granted = await requestCameraPermission();
 
-    try {
-      const granted = await requestCameraPermission();
+    //   if (granted) {
+    //     const result = await launchCamera({
+    //       mediaType: "photo",
+    //       quality: 1,
+    //       saveToPhotos: false,
+    //     });
 
-      if (granted) {
-        const result = await launchCamera({
-          mediaType: "photo",
-          quality: 1,
-          saveToPhotos: false,
-        });
+    //     if (result.errorCode) throw new Error(result.errorMessage);
 
-        if (result.errorCode) throw new Error(result.errorMessage);
+    //     if (result.didCancel) return;
 
-        if (result.didCancel) return;
-
-        if (result.assets) {
-          const dataFileCamera = result.assets[0];
-          const file = {
-            name: dataFileCamera.fileName!,
-            type: dataFileCamera.type!,
-            size: dataFileCamera.fileSize!,
-            uri: dataFileCamera.uri
-          }
-          navigate('CapturePhoto' as never, {
-            photoFile: file,
-            photoUri: dataFileCamera.uri
-          } as never);
-        }
-      }
-    } catch (err) {
-    }
+    //     if (result.assets) {
+    //       const dataFileCamera = result.assets[0];
+    //       const file = {
+    //         name: dataFileCamera.fileName!,
+    //         type: dataFileCamera.type!,
+    //         size: dataFileCamera.fileSize!,
+    //         uri: dataFileCamera.uri
+    //       }
+    //       navigate('CapturePhoto' as never, {
+    //         photoFile: file,
+    //         photoUri: dataFileCamera.uri
+    //       } as never);
+    //     }
+    //   }
+    // } catch (err) {
+    // }
   }
 
   return (
